@@ -13,6 +13,10 @@ namespace BikeShop.Models
         [Required, MaxLength(50)]
         public string Model { get; set; }
 
+        [DisplayName("Type")]
+        [Required, MaxLength(25)]
+        public string Type { get; set; }
+
         [DisplayName("Year")]
         [Required]
         public int Year { get; set; }

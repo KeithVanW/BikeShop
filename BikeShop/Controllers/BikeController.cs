@@ -43,6 +43,7 @@ namespace BikeShop.Controllers
                 {
                     Manufacturer = vm.Manufacturer,
                     Model = vm.Model,
+                    Type = vm.Type,
                     Year = vm.Year,
                     Price = vm.Price
                 };
@@ -69,6 +70,7 @@ namespace BikeShop.Controllers
             {
                 Manufacturer = bike.Manufacturer,
                 Model = bike.Model,
+                Type = bike.Type,
                 Year= bike.Year,
                 Price= bike.Price,
                 PhotoUrl = bike.PhotoUrl
@@ -86,6 +88,7 @@ namespace BikeShop.Controllers
             {
                 Manufacturer = bike.Manufacturer,
                 Model = bike.Model,
+                Type = bike.Type,
                 Year = bike.Year,
                 Price = bike.Price,
                 PhotoUrl = bike.PhotoUrl
@@ -103,6 +106,7 @@ namespace BikeShop.Controllers
                 {
                     Manufacturer = vm.Manufacturer,
                     Model = vm.Model,
+                    Type = vm.Type,
                     Year = vm.Year,
                     Price = vm.Price
                 };

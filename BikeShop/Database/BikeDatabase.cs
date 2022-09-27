@@ -15,6 +15,7 @@ namespace BikeShop.Database
                 Manufacturer = "Juliana",
                 Model = "Wilder X01 AXS TR Carbon CC",
                 Year = 2022,
+                Type = "Mountainbike",
                 Price = 9450
             });
 
@@ -23,6 +24,7 @@ namespace BikeShop.Database
                 Manufacturer = "Rocky Mountain",
                 Model = "Element Carbon 90",
                 Year = 2022,
+                Type = "Mountainbike",
                 Price = 9590
             });
 
@@ -31,6 +33,7 @@ namespace BikeShop.Database
                 Manufacturer = "Yeti",
                 Model = "160E T1",
                 Year = 2022,
+                Type = "Mountainbike",
                 Price = 13000
             });
         }
@@ -67,6 +70,7 @@ namespace BikeShop.Database
             {
                 bike.Manufacturer = updatedBike.Manufacturer;
                 bike.Model = updatedBike.Model;
+                bike.Type = updatedBike.Type;
                 bike.Year = updatedBike.Year;
                 bike.Price = updatedBike.Price;
                 bike.PhotoUrl = updatedBike.PhotoUrl;

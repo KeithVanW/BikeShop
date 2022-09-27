@@ -11,6 +11,9 @@ namespace BikeShop.Models
         [DisplayName("Model")]
         public string Model { get; set; }
 
+        [DisplayName("Type")]
+        public string Type { get; set; }
+
         [DisplayName("Year")]
         public int Year { get; set; }
 
