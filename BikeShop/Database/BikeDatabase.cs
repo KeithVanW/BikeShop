@@ -21,6 +21,7 @@ namespace BikeShop.Database
             if (bike != null)
             {
                 bikes.Remove(bike);
+                _BikeDbContext.SaveChanges();
             }
         }
 
@@ -37,12 +38,14 @@ namespace BikeShop.Database
         public Bike Insert(Bike bike)
         {
             bikes.Add(bike);
+            _BikeDbContext.SaveChanges();
             return bike;
         }
 
         public void Update(int Id, Bike updatedBike)
         {
             var bike = bikes.FirstOrDefault(x => x.Id == Id);
+
             if (bike != null)
             {
                 bike.Manufacturer = updatedBike.Manufacturer;
@@ -52,6 +55,8 @@ namespace BikeShop.Database
                 bike.Price = updatedBike.Price;
                 bike.PhotoUrl = updatedBike.PhotoUrl;
             }
+
+            _BikeDbContext.SaveChanges();
         }
     }
 }
