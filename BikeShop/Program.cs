@@ -1,10 +1,14 @@
 using BikeShop.Database;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<IBikeDatabase, BikeDatabase>();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<BikeDbContext>(x => x.UseSqlServer(connectionString));
+builder.Services.AddTransient<IBikeDatabase, BikeDatabase>();
 
 var app = builder.Build();
 
