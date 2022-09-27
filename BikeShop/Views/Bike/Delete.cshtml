@@ -1,0 +1,9 @@
+﻿@model BikeDeleteViewModel
+
+<p>Are you sure you want to remove <strong>@Model.Manufacturer @Model.Model</strong> ?</p>
+
+<form asp-controller="Bike" asp-action="ConfirmDelete" asp-route-id="@Model.Id" method="post">
+    <button class="btn btn-danger">Delete</button>
+</form>
+
+<a asp-controller="Bike" asp-action="Index">Back to overview</a>

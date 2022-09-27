@@ -1,0 +1,20 @@
+﻿@model BikeDetailViewModel
+
+<strong><label asp-for="Manufacturer"></label></strong>
+<p>@Model.Manufacturer</p>
+
+<strong><label asp-for="Model"></label></strong>
+<p>@Model.Model</p>
+
+<strong><label asp-for="Year"></label></strong>
+<p>@Model.Year</p>
+
+<strong><label asp-for="Price"></label></strong>
+<p>@Model.Price</p>
+
+<strong><label asp-for="PhotoUrl"></label></strong>
+    <p>
+        <img src="@Model.PhotoUrl" />
+    </p>
+
+<a asp-controller="Bike" asp-action="Index">Back to overview</a>

@@ -1,0 +1,31 @@
+﻿@model IEnumerable<BikeListViewModel>
+
+<h1>Bikes</h1>
+
+<a asp-controller="Bike" asp-action="Create">Add Bike</a>
+
+<table>
+    <thead>
+        <tr>
+            <th style="width:300px">Model</th>
+            <th style="width:300px">Manufacturer</th>
+            <th style="width:300px">Year</th>
+            <th style="width:150px">Detail</th>
+            <th style="width:150px">Edit</th>
+            <th style="width:150px">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Manufacturer</td>
+                <td>@item.Model</td>
+                <td>@item.Year</td>
+                <td><a asp-controller="bike" asp-action="detail" asp-route-id="@item.Id">View</a></td>
+                <td><a asp-controller="bike" asp-action="edit" asp-route-id="@item.Id">Edit</a></td>
+                <td><a asp-controller="bike" asp-action="delete" asp-route-id="@item.Id">Remove</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
