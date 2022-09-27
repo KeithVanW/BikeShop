@@ -31,7 +31,7 @@ namespace BikeShop.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            return View(new BikeCreateViewModel());
         }
 
         [HttpPost]

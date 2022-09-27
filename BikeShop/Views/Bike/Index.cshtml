@@ -9,7 +9,6 @@
         <tr>
             <th style="width:300px">Model</th>
             <th style="width:300px">Manufacturer</th>
-            <th style="width:300px">Type</th>
             <th style="width:300px">Year</th>
             <th style="width:150px">Detail</th>
             <th style="width:150px">Edit</th>
@@ -22,7 +21,6 @@
             <tr>
                 <td>@item.Manufacturer</td>
                 <td>@item.Model</td>
-                <td>@item.Type</td>
                 <td>@item.Year</td>
                 <td><a asp-controller="bike" asp-action="detail" asp-route-id="@item.Id">View</a></td>
                 <td><a asp-controller="bike" asp-action="edit" asp-route-id="@item.Id">Edit</a></td>

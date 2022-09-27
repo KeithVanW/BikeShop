@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BikeShop.Models
 {
@@ -16,6 +17,16 @@ namespace BikeShop.Models
         [DisplayName("Type")]
         [Required, MaxLength(25)]
         public string Type { get; set; }
+        public IEnumerable<SelectListItem> Types { get; set; } = new List<SelectListItem>()
+        {
+            new SelectListItem("Roadbike","Roadbike"),
+            new SelectListItem("Mountainbike","MountainBike"),
+            new SelectListItem("Cross Country", "Cross Country"),
+            new SelectListItem("Enduro AM","Enduro AM"),
+            new SelectListItem("Downhill","Downhill"),
+            new SelectListItem("Freeride MTB","Freeride MTB"),
+            new SelectListItem("Gravelbike", "Gravelbike")
+        };
 
         [DisplayName("Year")]
         [Required]

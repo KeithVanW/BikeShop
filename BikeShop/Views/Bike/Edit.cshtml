@@ -16,7 +16,7 @@
 
     <div class="form-group">
         <label asp-for="Type"></label>
-        <input asp-for="Type" class="form-control" />
+        <select class="form-control" asp-items="@Model.Types" asp-for="Type"></select>
         <span asp-validation-for="Type" class="text-danger"></span>
     </div>
 
