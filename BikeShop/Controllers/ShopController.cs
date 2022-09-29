@@ -1,4 +1,5 @@
-﻿using BikeShop.Database;
+﻿using AutoMapper;
+using BikeShop.Database;
 using BikeShop.Domain;
 using BikeShop.Models;
 using BikeShop.Models.Shop;
@@ -9,10 +10,12 @@ namespace BikeShop.Controllers
     public class ShopController : Controller
     {
         private readonly IBikeDatabase _bikeDatabase;
+        private readonly IMapper _mapper;
 
-        public ShopController(IBikeDatabase bikeDatabase)
+        public ShopController(IBikeDatabase bikeDatabase, IMapper mapper)
         {
             _bikeDatabase = bikeDatabase;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -29,8 +32,7 @@ namespace BikeShop.Controllers
                         Manufacturer = x.Manufacturer,
                         Model = x.Model,
                         PhotoUrl = x.PhotoUrl
-                    }
-                    ),
+                    })
             };
 
             return View(vm);
@@ -38,19 +40,8 @@ namespace BikeShop.Controllers
 
         public IActionResult Detail([FromRoute] int id)
         {
-            var bike = _bikeDatabase.GetBike(id);
-
-            // Todo look into automapper
-
-            var vm = new ShopDetailViewModel
-            {
-                Manufacturer = bike.Manufacturer,
-                Model = bike.Model,
-                Type = bike.Type,
-                Year = bike.Year,
-                Price = bike.Price,
-                PhotoUrl = bike.PhotoUrl
-            };
+            Bike bike = _bikeDatabase.GetBike(id);
+            ShopDetailViewModel vm = _mapper.Map<ShopDetailViewModel>(bike);
 
             return View(vm);
         }

@@ -6,6 +6,8 @@ namespace BikeShop.Models
 {
     public class BikeEditViewModel
     {
+        public string Title { get; } = "Edit Bike";
+
         [DisplayName("Manufacturer")]
         [Required, MaxLength(25)]
         public string Manufacturer { get; set; }

@@ -5,14 +5,14 @@
 }
 
 <div class="row">
-    <div class="col-md-12 mb-5">
+    <div class="banner mb-5">
         <a href="#">
             <img src="@Model.BannerUrl" />
         </a>
     </div>
 </div>
 
-<div class="row">
+<div class="row" id="allbikes">
 @foreach (var item in Model.Items)
 {
     <div class="col-auto">
