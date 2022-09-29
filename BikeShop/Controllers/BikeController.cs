@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BikeShop.Controllers
 {
+    // Replace var's
+    // Move logic to Service class
     public class BikeController : Controller
     {
         private readonly IBikeDatabase _bikeDatabase;
@@ -65,6 +67,8 @@ namespace BikeShop.Controllers
         public IActionResult Detail([FromRoute] int id)
         {
             var bike = _bikeDatabase.GetBike(id);
+
+            // Todo look into automapper
 
             var vm = new BikeDetailViewModel
             {
