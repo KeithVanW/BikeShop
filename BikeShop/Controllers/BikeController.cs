@@ -1,4 +1,5 @@
-﻿using BikeShop.Database;
+﻿using AutoMapper;
+using BikeShop.Database;
 using BikeShop.Domain;
 using BikeShop.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -11,15 +12,17 @@ namespace BikeShop.Controllers
     {
         private readonly IBikeDatabase _bikeDatabase;
         private readonly IWebHostEnvironment _hostEnvironment;
-        public BikeController(IBikeDatabase bikeDatabase, IWebHostEnvironment hostEnvironment)
+        private readonly IMapper _mapper;
+        public BikeController(IBikeDatabase bikeDatabase, IWebHostEnvironment hostEnvironment, IMapper mapper)
         {
             _bikeDatabase = bikeDatabase;
             _hostEnvironment = hostEnvironment;
+            _mapper = mapper;   
         }
 
         public IActionResult Index()
         {
-            var vm = _bikeDatabase.GetBikes().Select(x => new BikeListViewModel()
+            var vm = _bikeDatabase.GetBikes().Select(x => new BikeListViewModel
             {
                 Id = x.Id,
                 Manufacturer = x.Manufacturer,
@@ -67,18 +70,7 @@ namespace BikeShop.Controllers
         public IActionResult Detail([FromRoute] int id)
         {
             var bike = _bikeDatabase.GetBike(id);
-
-            // Todo look into automapper
-
-            var vm = new BikeDetailViewModel
-            {
-                Manufacturer = bike.Manufacturer,
-                Model = bike.Model,
-                Type = bike.Type,
-                Year= bike.Year,
-                Price= bike.Price,
-                PhotoUrl = bike.PhotoUrl
-            };
+            BikeDetailViewModel vm = _mapper.Map<BikeDetailViewModel>(bike);
 
             return View(vm);
         }
@@ -87,16 +79,7 @@ namespace BikeShop.Controllers
         public IActionResult Edit([FromRoute] int id)
         {
             var bike = _bikeDatabase.GetBike(id);
-
-            var vm = new BikeEditViewModel
-            {
-                Manufacturer = bike.Manufacturer,
-                Model = bike.Model,
-                Type = bike.Type,
-                Year = bike.Year,
-                Price = bike.Price,
-                PhotoUrl = bike.PhotoUrl
-            };
+            BikeEditViewModel vm = _mapper.Map<BikeEditViewModel>(bike);
 
             return View(vm);
         }
@@ -106,14 +89,8 @@ namespace BikeShop.Controllers
         {
             if (TryValidateModel(vm))
             {
-                var bike = new Bike()
-                {
-                    Manufacturer = vm.Manufacturer,
-                    Model = vm.Model,
-                    Type = vm.Type,
-                    Year = vm.Year,
-                    Price = vm.Price
-                };
+                Bike bike = new Bike();
+                bike = _mapper.Map<Bike>(vm);
 
                 var bikeFromDb = _bikeDatabase.GetBike(id); 
 
@@ -143,13 +120,7 @@ namespace BikeShop.Controllers
         public IActionResult Delete([FromRoute] int id)
         {
             var bike = _bikeDatabase.GetBike(id);
-
-            var vm = new BikeDeleteViewModel
-            {
-                Manufacturer = bike.Manufacturer,
-                Model = bike.Model,
-                Id = bike.Id
-            };
+            BikeDeleteViewModel vm = _mapper.Map<BikeDeleteViewModel>(bike);
 
             return View(vm);
         }

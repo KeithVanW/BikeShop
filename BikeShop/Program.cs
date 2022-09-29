@@ -9,7 +9,7 @@ builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<BikeDbContext>(x => x.UseSqlServer(connectionString));
 builder.Services.AddTransient<IBikeDatabase, BikeDatabase>();
-// builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
