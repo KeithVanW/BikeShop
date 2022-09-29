@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BikeShop.Controllers
 {
-    // Replace var's
     // Move logic to Service class
     public class BikeController : Controller
     {
@@ -22,7 +21,9 @@ namespace BikeShop.Controllers
 
         public IActionResult Index()
         {
-            var vm = _bikeDatabase.GetBikes().Select(x => new BikeListViewModel
+            // Automapper
+
+            IEnumerable<BikeListViewModel> vm = _bikeDatabase.GetBikes().Select(x => new BikeListViewModel
             {
                 Id = x.Id,
                 Manufacturer = x.Manufacturer,
@@ -44,14 +45,8 @@ namespace BikeShop.Controllers
         {
             if (TryValidateModel(vm))
             {
-                var bike = new Bike()
-                {
-                    Manufacturer = vm.Manufacturer,
-                    Model = vm.Model,
-                    Type = vm.Type,
-                    Year = vm.Year,
-                    Price = vm.Price
-                };
+                Bike bike = new Bike();
+                bike = _mapper.Map<Bike>(vm);
 
                 if (vm.Photo != null)
                 {
@@ -69,7 +64,7 @@ namespace BikeShop.Controllers
         [HttpGet]
         public IActionResult Detail([FromRoute] int id)
         {
-            var bike = _bikeDatabase.GetBike(id);
+            Bike bike = _bikeDatabase.GetBike(id);
             BikeDetailViewModel vm = _mapper.Map<BikeDetailViewModel>(bike);
 
             return View(vm);
@@ -78,7 +73,7 @@ namespace BikeShop.Controllers
         [HttpGet]
         public IActionResult Edit([FromRoute] int id)
         {
-            var bike = _bikeDatabase.GetBike(id);
+            Bike bike = _bikeDatabase.GetBike(id);
             BikeEditViewModel vm = _mapper.Map<BikeEditViewModel>(bike);
 
             return View(vm);
@@ -92,7 +87,7 @@ namespace BikeShop.Controllers
                 Bike bike = new Bike();
                 bike = _mapper.Map<Bike>(vm);
 
-                var bikeFromDb = _bikeDatabase.GetBike(id); 
+                Bike bikeFromDb = _bikeDatabase.GetBike(id); 
 
                 if (vm.Photo == null)
                 {
@@ -119,7 +114,7 @@ namespace BikeShop.Controllers
         [HttpGet]
         public IActionResult Delete([FromRoute] int id)
         {
-            var bike = _bikeDatabase.GetBike(id);
+            Bike bike = _bikeDatabase.GetBike(id);
             BikeDeleteViewModel vm = _mapper.Map<BikeDeleteViewModel>(bike);
 
             return View(vm);
@@ -139,7 +134,7 @@ namespace BikeShop.Controllers
             string pathName = Path.Combine(_hostEnvironment.WebRootPath, "Photos");
             string fileNameWithPath = Path.Combine(pathName, fileName);
 
-            using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+            using (FileStream stream = new FileStream(fileNameWithPath, FileMode.Create))
             {
                 photo.CopyTo(stream);
             }

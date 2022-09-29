@@ -10,7 +10,7 @@ namespace BikeShop.Profiles
         public BikeProfile()
         {
             CreateMap<Bike, BikeListViewModel>();
-            CreateMap<Bike, BikeCreateViewModel>();
+            CreateMap<Bike, BikeCreateViewModel>().ReverseMap();
             CreateMap<Bike, BikeDetailViewModel>();
             CreateMap<Bike, BikeEditViewModel>().ReverseMap();
             CreateMap<Bike, ShopDetailViewModel>();
