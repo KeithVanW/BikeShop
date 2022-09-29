@@ -17,3 +17,11 @@ body {
   margin-bottom: 60px;
 }
 
+.banner {
+    position : absolute;
+    left : 0px;
+}
+
+#allbikes {
+    padding-top: 300px;
+}

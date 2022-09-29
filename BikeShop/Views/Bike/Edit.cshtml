@@ -1,4 +1,7 @@
 ﻿@model BikeEditViewModel
+@{
+    ViewData["Title"] = @Model.Title;
+}
 
 <form asp-controller="bike" asp-action="edit" method="post" enctype="multipart/form-data">
 
