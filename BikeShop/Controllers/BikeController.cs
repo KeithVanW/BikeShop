@@ -12,24 +12,17 @@ namespace BikeShop.Controllers
         private readonly IBikeDatabase _bikeDatabase;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IMapper _mapper;
+
         public BikeController(IBikeDatabase bikeDatabase, IWebHostEnvironment hostEnvironment, IMapper mapper)
         {
             _bikeDatabase = bikeDatabase;
             _hostEnvironment = hostEnvironment;
-            _mapper = mapper;   
+            _mapper = mapper;
         }
 
         public IActionResult Index()
         {
-            // Automapper
-
-            IEnumerable<BikeListViewModel> vm = _bikeDatabase.GetBikes().Select(x => new BikeListViewModel
-            {
-                Id = x.Id,
-                Manufacturer = x.Manufacturer,
-                Model = x.Model,
-                Year = x.Year
-            });
+            IEnumerable<BikeListViewModel> vm = _bikeDatabase.GetBikes().Select(x => _mapper.Map<BikeListViewModel>(x));
 
             return View(vm);
         }
@@ -87,7 +80,7 @@ namespace BikeShop.Controllers
                 Bike bike = new Bike();
                 bike = _mapper.Map<Bike>(vm);
 
-                Bike bikeFromDb = _bikeDatabase.GetBike(id); 
+                Bike bikeFromDb = _bikeDatabase.GetBike(id);
 
                 if (vm.Photo == null)
                 {

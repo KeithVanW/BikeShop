@@ -7,8 +7,8 @@ namespace BikeShop.Database
     {
         public BikeDbContext(DbContextOptions<BikeDbContext> options) : base(options)
         {
-
         }
+
         public DbSet<Bike> Bikes { get; set; }
     }
 }
