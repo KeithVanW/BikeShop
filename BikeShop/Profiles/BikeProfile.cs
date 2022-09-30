@@ -14,6 +14,8 @@ namespace BikeShop.Profiles
             CreateMap<Bike, BikeDetailViewModel>();
             CreateMap<Bike, BikeEditViewModel>().ReverseMap();
             CreateMap<Bike, ShopDetailViewModel>();
+            CreateMap<Bike, ShopListItem>();
+            CreateMap<Bike, BikeDeleteViewModel>();
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace BikeShop.Models
 {
@@ -19,6 +19,7 @@ namespace BikeShop.Models
         [DisplayName("Type")]
         [Required, MaxLength(25)]
         public string Type { get; set; }
+
         public IEnumerable<SelectListItem> Types { get; set; } = new List<SelectListItem>()
         {
             new SelectListItem("Roadbike","Roadbike"),
@@ -40,6 +41,7 @@ namespace BikeShop.Models
 
         [DisplayName("Photo")]
         public IFormFile Photo { get; set; }
+
         public string? PhotoUrl { get; set; }
     }
 }
