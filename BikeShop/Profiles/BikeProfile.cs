@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BikeShop.Domain;
 using BikeShop.Models;
+using BikeShop.Models.Item;
 using BikeShop.Models.Shop;
 
 namespace BikeShop.Profiles
@@ -16,6 +17,8 @@ namespace BikeShop.Profiles
             CreateMap<Bike, ShopDetailViewModel>();
             CreateMap<Bike, ShopListItem>();
             CreateMap<Bike, BikeDeleteViewModel>();
+            CreateMap<Bike, ItemListViewModel>();
+
         }
     }
 }
