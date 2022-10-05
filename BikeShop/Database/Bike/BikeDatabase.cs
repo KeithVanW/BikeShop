@@ -5,14 +5,11 @@ namespace BikeShop.Database
 {
     public class BikeDatabase : IBikeDatabase
     {
-        // private readonly List<Bike> bikes;
         private readonly BikeDbContext _BikeDbContext;
-
         private DbSet<Bike> bikes;
 
         public BikeDatabase(BikeDbContext bikeDbContext)
         {
-            // bikes = new List<Bike>();
             _BikeDbContext = bikeDbContext;
             bikes = bikeDbContext.Bikes;
         }

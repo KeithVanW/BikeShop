@@ -4,6 +4,7 @@ using BikeShop.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BikeShop.Migrations
 {
     [DbContext(typeof(BikeDbContext))]
-    partial class BikeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221004063157_AddShoppingCart")]
+    partial class AddShoppingCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -105,7 +107,7 @@ namespace BikeShop.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemId"), 1L, 1);
 
-                    b.Property<int?>("BagId")
+                    b.Property<int>("BagId")
                         .HasColumnType("int");
 
                     b.Property<int>("BikeId")
@@ -136,7 +138,9 @@ namespace BikeShop.Migrations
                 {
                     b.HasOne("BikeShop.Domain.Cart.Bag", "Bag")
                         .WithMany("Items")
-                        .HasForeignKey("BagId");
+                        .HasForeignKey("BagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BikeShop.Domain.Bike", "Bike")
                         .WithMany()
