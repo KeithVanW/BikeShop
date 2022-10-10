@@ -2,27 +2,28 @@
 using BikeShop.Database;
 using BikeShop.Domain;
 using BikeShop.Models;
+using BikeShop.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BikeShop.Controllers
 {
-    // Move logic to Service class
     public class BikeController : Controller
     {
-        private readonly IBikeDatabase _bikeDatabase;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IMapper _mapper;
+        private readonly IBikeService _bikeService;
+        
 
-        public BikeController(IBikeDatabase bikeDatabase, IWebHostEnvironment hostEnvironment, IMapper mapper)
+        public BikeController(IBikeService bikeService, IWebHostEnvironment hostEnvironment, IMapper mapper)
         {
-            _bikeDatabase = bikeDatabase;
+            _bikeService = bikeService;
             _hostEnvironment = hostEnvironment;
             _mapper = mapper;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<BikeListViewModel> vm = _bikeDatabase.GetBikes().Select(x => _mapper.Map<BikeListViewModel>(x));
+            IEnumerable<BikeListViewModel> vm = _bikeService.GetBikes().Select(x => _mapper.Map<BikeListViewModel>(x));
 
             return View(vm);
         }
@@ -47,7 +48,7 @@ namespace BikeShop.Controllers
                     bike.PhotoUrl = Path.Combine("/photos", fileName);
                 }
 
-                _bikeDatabase.Insert(bike);
+                _bikeService.Insert(bike);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -57,7 +58,7 @@ namespace BikeShop.Controllers
         [HttpGet]
         public IActionResult Detail([FromRoute] int id)
         {
-            Bike bike = _bikeDatabase.GetBike(id);
+            Bike bike = _bikeService.GetBike(id);
             BikeDetailViewModel vm = _mapper.Map<BikeDetailViewModel>(bike);
 
             return View(vm);
@@ -66,7 +67,7 @@ namespace BikeShop.Controllers
         [HttpGet]
         public IActionResult Edit([FromRoute] int id)
         {
-            Bike bike = _bikeDatabase.GetBike(id);
+            Bike bike = _bikeService.GetBike(id);
             BikeEditViewModel vm = _mapper.Map<BikeEditViewModel>(bike);
 
             return View(vm);
@@ -80,7 +81,7 @@ namespace BikeShop.Controllers
                 Bike bike = new Bike();
                 bike = _mapper.Map<Bike>(vm);
 
-                Bike bikeFromDb = _bikeDatabase.GetBike(id);
+                Bike bikeFromDb = _bikeService.GetBike(id);
 
                 if (vm.Photo == null)
                 {
@@ -97,7 +98,7 @@ namespace BikeShop.Controllers
                     bike.PhotoUrl = Path.Combine("/photos", fileName);
                 }
 
-                _bikeDatabase.Update(id, bike);
+                _bikeService.Update(id, bike);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -107,7 +108,7 @@ namespace BikeShop.Controllers
         [HttpGet]
         public IActionResult Delete([FromRoute] int id)
         {
-            Bike bike = _bikeDatabase.GetBike(id);
+            Bike bike = _bikeService.GetBike(id);
             BikeDeleteViewModel vm = _mapper.Map<BikeDeleteViewModel>(bike);
 
             return View(vm);
@@ -116,7 +117,7 @@ namespace BikeShop.Controllers
         [HttpPost]
         public IActionResult ConfirmDelete([FromRoute] int id)
         {
-            _bikeDatabase.Delete(id);
+            _bikeService.Delete(id);
 
             return RedirectToAction(nameof(Index));
         }

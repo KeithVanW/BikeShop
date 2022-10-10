@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using BikeShop.Domain;
+using BikeShop.Domain.Cart;
 using BikeShop.Models;
-using BikeShop.Models.Item;
-using BikeShop.Models.Shop;
+using BikeShop.Models.Customer;
 
 namespace BikeShop.Profiles
 {
@@ -14,11 +14,13 @@ namespace BikeShop.Profiles
             CreateMap<Bike, BikeCreateViewModel>().ReverseMap();
             CreateMap<Bike, BikeDetailViewModel>();
             CreateMap<Bike, BikeEditViewModel>().ReverseMap();
-            CreateMap<Bike, ShopDetailViewModel>();
-            CreateMap<Bike, ShopListItem>();
             CreateMap<Bike, BikeDeleteViewModel>();
-            CreateMap<Bike, ItemListViewModel>();
 
+            CreateMap<Customer, CustomerListViewModel>();
+            CreateMap<Customer, CustomerCreateViewModel>().ReverseMap();
+            CreateMap<Customer, CustomerDetailViewModel>();
+            CreateMap<Customer, CustomerEditViewModel>().ReverseMap();
+            CreateMap<Customer, CustomerDeleteViewModel>();
         }
     }
 }

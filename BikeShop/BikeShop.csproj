@@ -6,8 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Cart\" />
-    <Folder Include="Views\Cart\" />
     <Folder Include="wwwroot\photos\banner\" />
   </ItemGroup>
 

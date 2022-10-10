@@ -1,0 +1,13 @@
+﻿@using BikeShop.Models.Customer
+@model CustomerDeleteViewModel
+@{
+    ViewData["Title"] = "Delete Customer";
+}
+
+<p>Are you sure you want to remove <strong>@Model.FirstName @Model.LastName</strong> ?</p>
+
+<form asp-controller="Customer" asp-action="ConfirmDelete" asp-route-id="@Model.CustomerId" method="post">
+    <button class="btn btn-danger">Delete</button>
+</form>
+
+<a asp-controller="Customer" asp-action="Index">Back to overview</a>

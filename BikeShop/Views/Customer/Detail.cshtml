@@ -1,0 +1,14 @@
+﻿@using BikeShop.Models.Customer
+@model CustomerDetailViewModel
+@{
+    ViewData["Title"] = "Customer Details";
+}
+
+<strong><label asp-for="FirstName"></label></strong>
+<p>@Model.FirstName</p>
+
+<strong><label asp-for="LastName"></label></strong>
+<p>@Model.LastName</p>
+
+
+<a asp-controller="Customer" asp-action="Index">Back to overview</a>
