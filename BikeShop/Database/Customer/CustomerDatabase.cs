@@ -6,51 +6,49 @@ namespace BikeShop.Database
 {
     public class CustomerDatabase : ICustomerDatabase
     {
-        private readonly BikeDbContext _BikeDbContext;
-        private DbSet<Customer> customers;
+        private readonly BikeDbContext _bikeDbContext;
         public CustomerDatabase(BikeDbContext bikeDbContext)
         {
-            _BikeDbContext = bikeDbContext;
-            customers = bikeDbContext.Customer;
+            _bikeDbContext = bikeDbContext;
         }
 
-        public void Delete(int Id)
+        public void Delete(int id)
         {
-            var customer = customers.FirstOrDefault(x => x.CustomerId == Id);
+            var customer = GetCustomer(id);
             if (customer != null)
             {
-                customers.Remove(customer);
-                _BikeDbContext.SaveChanges();
+                _bikeDbContext.Customer.Remove(customer);
+                _bikeDbContext.SaveChanges();
             }
         }
 
         public Customer GetCustomer(int id)
         {
-            return customers.FirstOrDefault(x => x.CustomerId == id);
+            return _bikeDbContext.Customer.FirstOrDefault(x => x.CustomerId == id);
         }
 
         public IEnumerable<Customer> GetCustomers()
         {
-          return customers;
+          return _bikeDbContext.Customer;
         }
 
         public Customer Insert(Customer customer)
         {
-            customers.Add(customer);
-            _BikeDbContext.SaveChanges();
+            _bikeDbContext.Customer.Add(customer);
+            _bikeDbContext.SaveChanges();
             return customer;
         }
 
-        public void Update(int Id, Customer updatedCustomer)
+        public void Update(int id, Customer updatedCustomer)
         {
-            var customer = customers.FirstOrDefault(x => x.CustomerId == Id);
-
+            var customer = GetCustomer(id);
             if (customer != null)
             {
                 customer.FirstName = updatedCustomer.FirstName;
                 customer.LastName = updatedCustomer.LastName;
                 customer.Bags = updatedCustomer.Bags;
             }
+            _bikeDbContext.SaveChanges();
         }
     }
 }

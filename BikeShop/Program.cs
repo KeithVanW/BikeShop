@@ -1,4 +1,5 @@
 using BikeShop.Database;
+using BikeShop.Service;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,10 +9,13 @@ builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<BikeDbContext>(x => x.UseSqlServer(connectionString));
+
 builder.Services.AddTransient<IBikeDatabase, BikeDatabase>();
-builder.Services.AddTransient<IBagDatabase, BagDatabase>();
-builder.Services.AddTransient<IItemDatabase, ItemDatabase>();
+builder.Services.AddTransient<IBikeService, BikeService>();
+
 builder.Services.AddTransient<ICustomerDatabase, CustomerDatabase>();
+builder.Services.AddTransient<ICustomerService, CustomerService>();
+
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();

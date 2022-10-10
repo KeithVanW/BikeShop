@@ -5,45 +5,43 @@ namespace BikeShop.Database
 {
     public class BikeDatabase : IBikeDatabase
     {
-        private readonly BikeDbContext _BikeDbContext;
-        private DbSet<Bike> bikes;
+        private readonly BikeDbContext _bikeDbContext;
 
         public BikeDatabase(BikeDbContext bikeDbContext)
         {
-            _BikeDbContext = bikeDbContext;
-            bikes = bikeDbContext.Bikes;
+            _bikeDbContext = bikeDbContext;
         }
 
-        public void Delete(int Id)
+        public void Delete(int id)
         {
-            var bike = bikes.FirstOrDefault(x => x.Id == Id);
+            var bike = GetBike(id);
             if (bike != null)
             {
-                bikes.Remove(bike);
-                _BikeDbContext.SaveChanges();
+                _bikeDbContext.Bikes.Remove(bike);
+                _bikeDbContext.SaveChanges();
             }
         }
 
         public Bike GetBike(int id)
         {
-            return bikes.FirstOrDefault(x => x.Id == id);
+            return _bikeDbContext.Bikes.FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<Bike> GetBikes()
         {
-            return bikes;
+            return _bikeDbContext.Bikes;
         }
 
         public Bike Insert(Bike bike)
         {
-            bikes.Add(bike);
-            _BikeDbContext.SaveChanges();
+            _bikeDbContext.Bikes.Add(bike);
+            _bikeDbContext.SaveChanges();
             return bike;
         }
 
-        public void Update(int Id, Bike updatedBike)
+        public void Update(int id, Bike updatedBike)
         {
-            var bike = bikes.FirstOrDefault(x => x.Id == Id);
+            var bike = GetBike(id);
 
             if (bike != null)
             {
@@ -55,7 +53,7 @@ namespace BikeShop.Database
                 bike.PhotoUrl = updatedBike.PhotoUrl;
             }
 
-            _BikeDbContext.SaveChanges();
+            _bikeDbContext.SaveChanges();
         }
     }
 }
