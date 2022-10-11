@@ -1,5 +1,4 @@
 ﻿using BikeShop.Domain;
-using Microsoft.EntityFrameworkCore;
 
 namespace BikeShop.Database
 {
@@ -12,14 +11,11 @@ namespace BikeShop.Database
             _bikeDbContext = bikeDbContext;
         }
 
-        public void Delete(int id)
+        public Bike Insert(Bike bike)
         {
-            var bike = GetBike(id);
-            if (bike != null)
-            {
-                _bikeDbContext.Bikes.Remove(bike);
-                _bikeDbContext.SaveChanges();
-            }
+            _bikeDbContext.Bikes.Add(bike);
+            _bikeDbContext.SaveChanges();
+            return bike;
         }
 
         public Bike GetBike(int id)
@@ -30,13 +26,6 @@ namespace BikeShop.Database
         public IEnumerable<Bike> GetBikes()
         {
             return _bikeDbContext.Bikes;
-        }
-
-        public Bike Insert(Bike bike)
-        {
-            _bikeDbContext.Bikes.Add(bike);
-            _bikeDbContext.SaveChanges();
-            return bike;
         }
 
         public void Update(int id, Bike updatedBike)
@@ -54,6 +43,16 @@ namespace BikeShop.Database
             }
 
             _bikeDbContext.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            var bike = GetBike(id);
+            if (bike != null)
+            {
+                _bikeDbContext.Bikes.Remove(bike);
+                _bikeDbContext.SaveChanges();
+            }
         }
     }
 }

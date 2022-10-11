@@ -16,6 +16,9 @@ builder.Services.AddTransient<IBikeService, BikeService>();
 builder.Services.AddTransient<ICustomerDatabase, CustomerDatabase>();
 builder.Services.AddTransient<ICustomerService, CustomerService>();
 
+builder.Services.AddTransient<IItemDatabase, ItemDatabase>();
+builder.Services.AddTransient<IBagDatabase, BagDatabase>();
+
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();

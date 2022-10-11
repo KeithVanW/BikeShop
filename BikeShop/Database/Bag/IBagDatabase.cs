@@ -1,5 +1,4 @@
-﻿using BikeShop.Domain;
-using BikeShop.Domain.Cart;
+﻿using BikeShop.Domain.Cart;
 
 namespace BikeShop.Database
 {

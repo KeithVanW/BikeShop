@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using BikeShop.Domain;
 using BikeShop.Domain.Cart;
-using BikeShop.Models;
 using BikeShop.Models.Customer;
 using BikeShop.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +10,11 @@ namespace BikeShop.Controllers
     {
         private readonly ICustomerService _customerService;
         private readonly IMapper _mapper;
+
         public CustomerController(ICustomerService customerService, IMapper mapper)
         {
             _customerService = customerService;
-            _mapper = mapper;   
+            _mapper = mapper;
         }
 
         [HttpGet]

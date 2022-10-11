@@ -21,7 +21,7 @@
             <p><strong>@item.Manufacturer @item.Model</strong></p>
             <img src="@item.PhotoUrl" width="300"/>
         </div>
-            <a asp-controller="shop" asp-action="detail" asp-route-id="@item.Id">
+            <a asp-controller="Bag" asp-action="AddToCart" asp-route-id="@item.Id">
                 <button type="button" class="btn btn-success">
                     Buy Bike
                 </button>

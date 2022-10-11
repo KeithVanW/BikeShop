@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BikeShop.Database;
 using BikeShop.Domain;
 using BikeShop.Models;
 using BikeShop.Service;
@@ -12,7 +11,6 @@ namespace BikeShop.Controllers
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IMapper _mapper;
         private readonly IBikeService _bikeService;
-        
 
         public BikeController(IBikeService bikeService, IWebHostEnvironment hostEnvironment, IMapper mapper)
         {
