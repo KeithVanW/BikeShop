@@ -1,12 +1,11 @@
-﻿using BikeShop.Domain;
-using BikeShop.Domain.Cart;
-using Microsoft.EntityFrameworkCore;
+﻿using BikeShop.Domain.Cart;
 
 namespace BikeShop.Database
 {
     public class CustomerDatabase : ICustomerDatabase
     {
         private readonly BikeDbContext _bikeDbContext;
+
         public CustomerDatabase(BikeDbContext bikeDbContext)
         {
             _bikeDbContext = bikeDbContext;
@@ -29,7 +28,7 @@ namespace BikeShop.Database
 
         public IEnumerable<Customer> GetCustomers()
         {
-          return _bikeDbContext.Customer;
+            return _bikeDbContext.Customer;
         }
 
         public Customer Insert(Customer customer)

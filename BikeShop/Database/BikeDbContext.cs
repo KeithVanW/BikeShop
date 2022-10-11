@@ -9,6 +9,7 @@ namespace BikeShop.Database
         public BikeDbContext(DbContextOptions<BikeDbContext> options) : base(options)
         {
         }
+
         public DbSet<Bike> Bikes { get; set; }
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Bag> Bag { get; set; }

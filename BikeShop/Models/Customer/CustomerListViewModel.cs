@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace BikeShop.Models.Customer
+﻿namespace BikeShop.Models.Customer
 {
     public class CustomerListViewModel
     {

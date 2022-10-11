@@ -1,52 +1,46 @@
-﻿using BikeShop.Controllers;
-using BikeShop.Domain;
-using BikeShop.Domain.Cart;
-using Microsoft.EntityFrameworkCore;
+﻿using BikeShop.Domain.Cart;
 
 namespace BikeShop.Database
 {
     public class ItemDatabase : IItemDatabase
     {
         private readonly BikeDbContext _BikeDbContext;
-        private DbSet<Item> items;
-        private IItemDatabase _itemDatabase;
 
-        public ItemDatabase(BikeDbContext bikeDbContext, IItemDatabase itemDatabase)
+        public ItemDatabase(BikeDbContext bikeDbContext)
         {
             _BikeDbContext = bikeDbContext;
-            items = bikeDbContext.Items;
-            _itemDatabase = itemDatabase;
         }
-        public void Delete(int Id)
+
+        public void Delete(int id)
         {
-            var item = items.FirstOrDefault(x => x.ItemId == Id);
+            var item = GetItem(id);
             if (item != null)
             {
-                items.Remove(item);
+                _BikeDbContext.Items.Remove(item);
                 _BikeDbContext.SaveChanges();
             }
         }
 
         public Item GetItem(int id)
         {
-            return items.FirstOrDefault(x => x.ItemId == id);
+            return _BikeDbContext.Items.FirstOrDefault(x => x.ItemId == id);
         }
 
         public IEnumerable<Item> GetItems()
         {
-            return items;
+            return _BikeDbContext.Items;
         }
 
         public Item Insert(Item item)
         {
-            items.Add(item);
+            _BikeDbContext.Items.Add(item);
             _BikeDbContext.SaveChanges();
             return item;
         }
 
-        public void Update(int Id, Item updatedItem)
+        public void Update(int id, Item updatedItem)
         {
-            var item = items.FirstOrDefault(x => x.ItemId == Id);
+            var item = GetItem(id);
 
             if (item != null)
             {

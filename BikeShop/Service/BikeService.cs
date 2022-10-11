@@ -6,6 +6,7 @@ namespace BikeShop.Service
     public class BikeService : IBikeService
     {
         private readonly IBikeDatabase _bikeDatabase;
+
         public BikeService(IBikeDatabase bikeDatabase)
         {
             _bikeDatabase = bikeDatabase;
