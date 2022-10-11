@@ -17,7 +17,10 @@ builder.Services.AddTransient<ICustomerDatabase, CustomerDatabase>();
 builder.Services.AddTransient<ICustomerService, CustomerService>();
 
 builder.Services.AddTransient<IItemDatabase, ItemDatabase>();
+builder.Services.AddTransient<IItemService, ItemService>();
+
 builder.Services.AddTransient<IBagDatabase, BagDatabase>();
+builder.Services.AddTransient<IBagService, BagService>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 

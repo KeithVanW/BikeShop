@@ -21,7 +21,8 @@ namespace BikeShop.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<BikeListViewModel> vm = _bikeService.GetBikes().Select(x => _mapper.Map<BikeListViewModel>(x));
+            IEnumerable<BikeListViewModel> vm = _bikeService.GetBikes()
+                .Select(x => _mapper.Map<BikeListViewModel>(x));
 
             return View(vm);
         }

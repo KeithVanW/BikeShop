@@ -1,35 +1,29 @@
-﻿@model IEnumerable<BikeShop.Domain.Cart.Bag>
+﻿@using BikeShop.Models.Bag
+@model IEnumerable<BagListViewModel>
+
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Bag Overview";
 }
 
-<h1>Index</h1>
+<h1>Cart Overview</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<table>
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th></th>
+            <th style="width:300px">Date</th>
+            <th style="width:150px">Detail</th>
+            <th style="width:150px">Delete</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.BagId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.BagId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BagId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Date</td>
+                <td><a asp-controller="Bag" asp-action="detail" asp-route-id="@item.BagId">View</a></td>
+                <td><a asp-controller="Bag" asp-action="delete" asp-route-id="@item.BagId">Remove</a></td>
+            </tr>
+        }
     </tbody>
 </table>
