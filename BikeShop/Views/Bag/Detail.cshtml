@@ -1,0 +1,14 @@
+﻿@using BikeShop.Models.Bag
+@model BagDetailViewModel
+
+@{
+    ViewData["Title"] = "Bag Details";
+}
+
+<strong><label asp-for="BagId"></label></strong>
+<p>@Model.BagId</p>
+
+<strong><label asp-for="Date"></label></strong>
+<p>@Model.Date</p>
+
+<a asp-controller="Bag" asp-action="Index">Back to overview</a>

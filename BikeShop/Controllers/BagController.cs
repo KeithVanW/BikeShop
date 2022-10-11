@@ -1,8 +1,13 @@
-﻿using BikeShop.Database;
+﻿using AutoMapper;
+using BikeShop.Database;
+using BikeShop.Domain;
 using BikeShop.Domain.Cart;
+using BikeShop.Models;
+using BikeShop.Models.Bag;
 using BikeShop.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace BikeShop.Controllers
@@ -12,154 +17,61 @@ namespace BikeShop.Controllers
         private readonly BikeDbContext _context;
         private readonly IBikeService _bikeService;
         private readonly ICustomerService _customerService;
-        private readonly IItemDatabase _itemDatabase;
+        private readonly IItemService _itemService;
+        private readonly IBagService _bagService;
+        private readonly IMapper _mapper;
 
         public BagController(BikeDbContext context, IBikeService bikeService,
-            ICustomerService customerService, IItemDatabase itemDatabase)
+            ICustomerService customerService, IItemService itemService, 
+            IBagService bagService, IMapper mapper)
         {
             _context = context;
             _bikeService = bikeService;
             _customerService = customerService;
-            _itemDatabase = itemDatabase;
+            _itemService = itemService;
+            _bagService = bagService; 
+            _mapper = mapper;
         }
 
-        // GET: Bag
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Bag.ToListAsync());
+            IEnumerable<BagListViewModel> vm = _bagService.GetBags()
+                .Select(x => _mapper.Map<BagListViewModel>(x));
+
+            return View(vm);
         }
 
-        // GET: Bag/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [HttpGet]
+        public IActionResult Detail([FromRoute] int id)
         {
-            if (id == null || _context.Bag == null)
-            {
-                return NotFound();
-            }
-
-            var bag = await _context.Bag
-                .FirstOrDefaultAsync(m => m.BagId == id);
-            if (bag == null)
-            {
-                return NotFound();
-            }
-
-            return View(bag);
+            Bag bag = _bagService.GetBag(id);
+            BagDetailViewModel vm = _mapper.Map<BagDetailViewModel>(bag);
+            
+            return View(vm);
         }
 
-        // GET: Bag/Create
-        public IActionResult Create()
+        [HttpGet]
+        public IActionResult Delete([FromRoute] int id)
         {
-            return View();
+            Bag bag = _bagService.GetBag(id);
+            BagDeleteViewModel vm = _mapper.Map<BagDeleteViewModel>(bag);
+
+            return View(vm);
         }
 
-        // POST: Bag/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BagId,Date")] Bag bag)
+        public IActionResult ConfirmDelete([FromRoute] int id)
         {
-            if (ModelState.IsValid)
+            var items = _context.Items.Where(x => EF.Property<int>(x, "BagId") == id);
+            foreach (var item in items)
             {
-                _context.Add(bag);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                _context.Items.Remove(item);
             }
-            return View(bag);
-        }
+            _context.SaveChanges();
 
-        // GET: Bag/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Bag == null)
-            {
-                return NotFound();
-            }
+            _bagService.Delete(id);
 
-            var bag = await _context.Bag.FindAsync(id);
-            if (bag == null)
-            {
-                return NotFound();
-            }
-            return View(bag);
-        }
-
-        // POST: Bag/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BagId,Date")] Bag bag)
-        {
-            if (id != bag.BagId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(bag);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!BagExists(bag.BagId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(bag);
-        }
-
-        // GET: Bag/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Bag == null)
-            {
-                return NotFound();
-            }
-
-            var bag = await _context.Bag
-                .FirstOrDefaultAsync(m => m.BagId == id);
-            if (bag == null)
-            {
-                return NotFound();
-            }
-
-            return View(bag);
-        }
-
-        // POST: Bag/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Bag == null)
-            {
-                return Problem("Entity set 'BikeDbContext.Bag'  is null.");
-            }
-            var bag = await _context.Bag.FindAsync(id);
-            if (bag != null)
-            {
-                _context.Bag.Remove(bag);
-            }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool BagExists(int id)
-        {
-            return _context.Bag.Any(e => e.BagId == id);
         }
 
         public IActionResult AddToCart([FromRoute] int id)
@@ -179,7 +91,7 @@ namespace BikeShop.Controllers
             Bag bag = new Bag()
             {
                 Date = DateTime.Now,
-                Customer = _customerService.GetCustomer(1),
+                Customer = _customerService.GetCustomer(4),
                 Items = items
             };
 

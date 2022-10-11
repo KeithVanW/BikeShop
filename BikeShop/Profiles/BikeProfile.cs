@@ -2,6 +2,7 @@
 using BikeShop.Domain;
 using BikeShop.Domain.Cart;
 using BikeShop.Models;
+using BikeShop.Models.Bag;
 using BikeShop.Models.Customer;
 using BikeShop.Models.Shop;
 
@@ -24,6 +25,11 @@ namespace BikeShop.Profiles
             CreateMap<Customer, CustomerDetailViewModel>();
             CreateMap<Customer, CustomerEditViewModel>().ReverseMap();
             CreateMap<Customer, CustomerDeleteViewModel>();
+
+            CreateMap<Bag, BagListViewModel>();
+            CreateMap<Bag, BagDetailViewModel>();
+            CreateMap<Bag, BagDeleteViewModel>();
+
         }
     }
 }
